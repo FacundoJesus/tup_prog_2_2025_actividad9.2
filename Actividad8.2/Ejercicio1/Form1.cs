@@ -1,6 +1,7 @@
 using Ejercicio1.Models;
 using Ejercicio1.Models.Exportadores;
 using System.Runtime.Intrinsics.X86;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Ejercicio1
 {
@@ -11,10 +12,34 @@ namespace Ejercicio1
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e) { }
-
-
         List<IExportable> exportables = new List<IExportable>();
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Verificar si hay multas
+            FileStream fs = null;
+            
+            try
+            {
+                string path = openFileDialog1.FileName;
+                fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
+#pragma warning disable SYSLIB0011
+                BinaryFormatter bf = new BinaryFormatter();
+                exportables = bf.Deserialize(fs) as List<IExportable>;
+#pragma warning restore SYSLIB0011
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (fs != null) fs.Close();
+            }
+
+            btnActualizar.PerformClick();
+        }
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -65,13 +90,13 @@ namespace Ejercicio1
                 }
 
             }
-            catch(PatenteNoValidaException excePatente)
+            catch (PatenteNoValidaException excePatente)
             {
-                MessageBox.Show(excePatente.Message,"ERROR",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(excePatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error); 
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             #region Limpio Campos
@@ -133,7 +158,7 @@ namespace Ejercicio1
                 }
                 finally
                 {
-                    if (sr != null) sr.Close(); 
+                    if (sr != null) sr.Close();
                     if (fs != null) fs.Close();
                 }
 
@@ -143,8 +168,8 @@ namespace Ejercicio1
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            
-            saveFileDialog1.Filter = "(csv)|*.csv|(json)|*.json|(txt)|*.txt|(xml)|*.xml";            
+
+            saveFileDialog1.Filter = "(csv)|*.csv|(json)|*.json|(txt)|*.txt|(xml)|*.xml";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -167,31 +192,56 @@ namespace Ejercicio1
                     if (exportador is CampoFijoExportador) sw.WriteLine("Patente  Venc.     Importe");
                     if (exportador is XMLExportador) sw.WriteLine("<Multas>");
                     */
-                    foreach (IExportable exportable in exportables) {
+                    foreach (IExportable exportable in exportables)
+                    {
                         sw.WriteLine(exportable.Exportar(exportador));
                     }
 
                     //if (exportador is XMLExportador) sw.WriteLine("</Multas>");
 
                 }
-                catch(PatenteNoValidaException excePatente) 
+                catch (PatenteNoValidaException excePatente)
                 {
                     MessageBox.Show(excePatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
-                    if(sw != null) sw.Close();
-                    if(fs != null) fs.Close();
+                    if (sw != null) sw.Close();
+                    if (fs != null) fs.Close();
                 }
 
             }
 
 
         }
-            
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Verificar si hay multas
+            FileStream fs = null;
+
+            try
+            {
+                string path = openFileDialog1.FileName;
+                fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+#pragma warning disable SYSLIB0011
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(fs,exportables);
+#pragma warning restore SYSLIB0011
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (fs != null) fs.Close();
+            }
+
+        }
     }
 }

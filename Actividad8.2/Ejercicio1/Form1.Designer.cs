@@ -45,6 +45,7 @@
             // 
             // dtpVencimiento
             // 
+            dtpVencimiento.CustomFormat = "dd/MM/yyyy";
             dtpVencimiento.Location = new Point(154, 59);
             dtpVencimiento.Name = "dtpVencimiento";
             dtpVencimiento.Size = new Size(200, 23);
@@ -165,6 +166,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Ejercicio 1";
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
