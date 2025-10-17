@@ -41,14 +41,16 @@
             btnExportar = new Button();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
+            btnEliminar = new Button();
             SuspendLayout();
             // 
             // dtpVencimiento
             // 
             dtpVencimiento.CustomFormat = "dd/MM/yyyy";
+            dtpVencimiento.Format = DateTimePickerFormat.Custom;
             dtpVencimiento.Location = new Point(154, 59);
             dtpVencimiento.Name = "dtpVencimiento";
-            dtpVencimiento.Size = new Size(200, 23);
+            dtpVencimiento.Size = new Size(128, 23);
             dtpVencimiento.TabIndex = 0;
             // 
             // label1
@@ -80,7 +82,7 @@
             // 
             // btnConfirmar
             // 
-            btnConfirmar.Location = new Point(392, 54);
+            btnConfirmar.Location = new Point(409, 54);
             btnConfirmar.Name = "btnConfirmar";
             btnConfirmar.Size = new Size(75, 37);
             btnConfirmar.TabIndex = 4;
@@ -106,16 +108,16 @@
             // 
             lsbResultado.FormattingEnabled = true;
             lsbResultado.ItemHeight = 15;
-            lsbResultado.Location = new Point(23, 159);
+            lsbResultado.Location = new Point(12, 159);
             lsbResultado.Name = "lsbResultado";
             lsbResultado.ScrollAlwaysVisible = true;
-            lsbResultado.Size = new Size(331, 169);
+            lsbResultado.Size = new Size(361, 214);
             lsbResultado.TabIndex = 7;
             lsbResultado.SelectedValueChanged += lsbResultado_SelectedValueChanged;
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(392, 168);
+            btnActualizar.Location = new Point(409, 159);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(75, 37);
             btnActualizar.TabIndex = 8;
@@ -125,7 +127,7 @@
             // 
             // btnImportar
             // 
-            btnImportar.Location = new Point(392, 221);
+            btnImportar.Location = new Point(409, 222);
             btnImportar.Name = "btnImportar";
             btnImportar.Size = new Size(75, 37);
             btnImportar.TabIndex = 9;
@@ -135,7 +137,7 @@
             // 
             // btnExportar
             // 
-            btnExportar.Location = new Point(392, 275);
+            btnExportar.Location = new Point(409, 281);
             btnExportar.Name = "btnExportar";
             btnExportar.Size = new Size(75, 37);
             btnExportar.TabIndex = 10;
@@ -147,11 +149,22 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // btnEliminar
+            // 
+            btnEliminar.Location = new Point(409, 336);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(75, 37);
+            btnEliminar.TabIndex = 11;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(496, 355);
+            ClientSize = new Size(496, 390);
+            Controls.Add(btnEliminar);
             Controls.Add(btnExportar);
             Controls.Add(btnImportar);
             Controls.Add(btnActualizar);
@@ -187,5 +200,6 @@
         private Button btnExportar;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
+        private Button btnEliminar;
     }
 }

@@ -24,7 +24,7 @@ namespace Ejercicio1.Models.Exportadores
             if (match.Success)
             {
                 m.Patente = match.Groups[1].Value;
-                m.Vencimiento = DateOnly.ParseExact(match.Groups[2].Value,"dd/MM/yyyy");
+                m.Vencimiento = DateTime.ParseExact(match.Groups[2].Value,"dd/MM/yyyy",CultureInfo.InvariantCulture);
                 m.Importe = Convert.ToDouble(match.Groups[3].Value);
                 return true;
             }

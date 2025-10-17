@@ -21,7 +21,7 @@ namespace Ejercicio1.Models.Exportadores
             if (splitResult.Length != 3) return false;
 
             m.Patente = splitResult[0];
-            m.Vencimiento = DateOnly.ParseExact(splitResult[1], "dd/MM/yyyy");
+            m.Vencimiento = DateTime.ParseExact(splitResult[1], "dd/MM/yyyy",CultureInfo.InvariantCulture);
             m.Importe = Convert.ToDouble(splitResult[2], CultureInfo.InvariantCulture);
 
             return true;

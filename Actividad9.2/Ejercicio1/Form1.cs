@@ -16,9 +16,8 @@ namespace Ejercicio1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Verificar si hay multas
+
             FileStream fs = null;
-            
             try
             {
                 string path = openFileDialog1.FileName;
@@ -30,7 +29,7 @@ namespace Ejercicio1
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -53,12 +52,12 @@ namespace Ejercicio1
 
         private void lsbResultado_SelectedValueChanged(object sender, EventArgs e)
         {
-            Multa selececcionada = lsbResultado.SelectedItem as Multa;
-            if (selececcionada != null)
+            Multa seleccionada = lsbResultado.SelectedItem as Multa;
+            if (seleccionada != null)
             {
-                tbPatente.Text = selececcionada.Patente;
-                dtpVencimiento.Value = selececcionada.Vencimiento.ToDateTime(new TimeOnly(0, 0));
-                tbImporte.Text = selececcionada.Importe.ToString("f2");
+                tbPatente.Text = seleccionada.Patente;
+                dtpVencimiento.Value = seleccionada.Vencimiento;
+                tbImporte.Text = seleccionada.Importe.ToString("f2");
             }
         }
 
@@ -68,7 +67,7 @@ namespace Ejercicio1
             try
             {
                 string patente = tbPatente.Text;
-                DateOnly vencimiento = DateOnly.FromDateTime(dtpVencimiento.Value);
+                DateTime vencimiento = dtpVencimiento.Value.Date;
                 double importe = Convert.ToDouble(tbImporte.Text);
 
                 nuevaMulta = new Multa(patente, vencimiento, importe);
@@ -78,7 +77,7 @@ namespace Ejercicio1
                 if (idx > -1)
                 {
                     Multa multa = exportables[idx] as Multa;
-                    multa.Importe += importe;
+                    multa.Importe = importe;
                     if (multa.Vencimiento < ((Multa)nuevaMulta).Vencimiento)
                     {
                         multa.Vencimiento = ((Multa)nuevaMulta).Vencimiento;
@@ -139,7 +138,7 @@ namespace Ejercicio1
                             if (idx >= 0)
                             {
                                 Multa multa = exportables[idx] as Multa;
-                                multa.Importe += ((Multa)nuevo).Importe;
+                                multa.Importe = ((Multa)nuevo).Importe;
                                 if (multa.Vencimiento < ((Multa)nuevo).Vencimiento) ;
                                 multa.Vencimiento = ((Multa)nuevo).Vencimiento;
                             }
@@ -185,19 +184,10 @@ namespace Ejercicio1
                     fs = new FileStream(nombre, FileMode.Create, FileAccess.Write);
                     sw = new StreamWriter(fs);
 
-                    //Debo escribir la 1º linea...VER
-                    /*
-                    if (exportador is CSVExportador) 
-                        sw.WriteLine("Patente;Vencimiento;Importe");
-                    if (exportador is CampoFijoExportador) sw.WriteLine("Patente  Venc.     Importe");
-                    if (exportador is XMLExportador) sw.WriteLine("<Multas>");
-                    */
                     foreach (IExportable exportable in exportables)
                     {
                         sw.WriteLine(exportable.Exportar(exportador));
                     }
-
-                    //if (exportador is XMLExportador) sw.WriteLine("</Multas>");
 
                 }
                 catch (PatenteNoValidaException excePatente)
@@ -221,7 +211,7 @@ namespace Ejercicio1
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Verificar si hay multas
+
             FileStream fs = null;
 
             try
@@ -230,7 +220,7 @@ namespace Ejercicio1
                 fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
 #pragma warning disable SYSLIB0011
                 BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(fs,exportables);
+                bf.Serialize(fs, exportables);
 #pragma warning restore SYSLIB0011
             }
             catch (Exception ex)
@@ -242,6 +232,17 @@ namespace Ejercicio1
                 if (fs != null) fs.Close();
             }
 
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            IExportable seleccionado = lsbResultado.SelectedItem as IExportable;
+
+            if(seleccionado != null ) {
+                exportables.Remove(seleccionado);
+                lsbResultado.Items.Remove(seleccionado);
+            }
+            btnActualizar.PerformClick();
         }
     }
 }

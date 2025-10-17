@@ -27,12 +27,22 @@ namespace Ejercicio1.Models
                 patente = value;
             }
         }
-        public DateOnly Vencimiento { get; set; }
+        public DateTime Vencimiento { get; set; }
 
-        public double Importe { get; set; }
+        private double total;
+        public double Importe { 
+            get
+            {
+                return total;
+            }
+            set
+            {
+                total += value;
+            }
+        }
 
         public Multa() { }
-        public Multa(string patente, DateOnly vencimiento, double importe)
+        public Multa(string patente, DateTime vencimiento, double importe)
         {
             this.Patente = patente;
             this.Vencimiento = vencimiento;
@@ -51,7 +61,7 @@ namespace Ejercicio1.Models
 
         public override string ToString()
         {
-            return $"Patente: {this.Patente.ToUpper()} - Vencimiento: {this.Vencimiento:dd/MM/yyyy} - Importe: {this.Importe:f2}";
+            return $"Patente: {this.Patente.ToUpper()} - Vencimiento: {this.Vencimiento:dd/MM/yyyy} - Importe: ${this.Importe:f2}";
         }
 
         public bool Importar(string data, IExportador exportador)
