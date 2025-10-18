@@ -22,10 +22,10 @@ namespace Ejercicio1
             {
                 string path = openFileDialog1.FileName;
                 fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
-#pragma warning disable SYSLIB0011
+                #pragma warning disable SYSLIB0011
                 BinaryFormatter bf = new BinaryFormatter();
                 exportables = bf.Deserialize(fs) as List<IExportable>;
-#pragma warning restore SYSLIB0011
+                #pragma warning restore SYSLIB0011
             }
             catch (Exception ex)
             {
@@ -218,10 +218,10 @@ namespace Ejercicio1
             {
                 string path = openFileDialog1.FileName;
                 fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
-#pragma warning disable SYSLIB0011
+                #pragma warning disable SYSLIB0011
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(fs, exportables);
-#pragma warning restore SYSLIB0011
+                #pragma warning restore SYSLIB0011
             }
             catch (Exception ex)
             {

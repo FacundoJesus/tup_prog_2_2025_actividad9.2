@@ -82,7 +82,7 @@
             // 
             // btnConfirmar
             // 
-            btnConfirmar.Location = new Point(409, 54);
+            btnConfirmar.Location = new Point(433, 54);
             btnConfirmar.Name = "btnConfirmar";
             btnConfirmar.Size = new Size(75, 37);
             btnConfirmar.TabIndex = 4;
@@ -111,13 +111,13 @@
             lsbResultado.Location = new Point(12, 159);
             lsbResultado.Name = "lsbResultado";
             lsbResultado.ScrollAlwaysVisible = true;
-            lsbResultado.Size = new Size(361, 214);
+            lsbResultado.Size = new Size(391, 214);
             lsbResultado.TabIndex = 7;
             lsbResultado.SelectedValueChanged += lsbResultado_SelectedValueChanged;
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(409, 159);
+            btnActualizar.Location = new Point(433, 159);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(75, 37);
             btnActualizar.TabIndex = 8;
@@ -127,7 +127,7 @@
             // 
             // btnImportar
             // 
-            btnImportar.Location = new Point(409, 222);
+            btnImportar.Location = new Point(433, 222);
             btnImportar.Name = "btnImportar";
             btnImportar.Size = new Size(75, 37);
             btnImportar.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             // btnExportar
             // 
-            btnExportar.Location = new Point(409, 281);
+            btnExportar.Location = new Point(433, 281);
             btnExportar.Name = "btnExportar";
             btnExportar.Size = new Size(75, 37);
             btnExportar.TabIndex = 10;
@@ -151,7 +151,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(409, 336);
+            btnEliminar.Location = new Point(433, 336);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 37);
             btnEliminar.TabIndex = 11;
@@ -163,7 +163,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(496, 390);
+            ClientSize = new Size(535, 390);
             Controls.Add(btnEliminar);
             Controls.Add(btnExportar);
             Controls.Add(btnImportar);
