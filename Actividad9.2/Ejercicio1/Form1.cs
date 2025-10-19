@@ -18,25 +18,29 @@ namespace Ejercicio1
         {
 
             FileStream fs = null;
-            try
-            {
-                string path = openFileDialog1.FileName;
-                fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
-                #pragma warning disable SYSLIB0011
-                BinaryFormatter bf = new BinaryFormatter();
-                exportables = bf.Deserialize(fs) as List<IExportable>;
-                #pragma warning restore SYSLIB0011
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                if (fs != null) fs.Close();
-            }
+            string path = openFileDialog1.FileName;
+            if (File.Exists(path)) {
+                try
+                {
 
-            btnActualizar.PerformClick();
+                    fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read);
+                    #pragma warning disable SYSLIB0011
+                    BinaryFormatter bf = new BinaryFormatter();
+                    exportables = bf.Deserialize(fs) as List<IExportable>;
+                    #pragma warning restore SYSLIB0011
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "ERROR al cargar Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (fs != null) fs.Close();
+                }
+
+                btnActualizar.PerformClick();
+            }
+            
         }
 
 
@@ -114,6 +118,7 @@ namespace Ejercicio1
             {
                 string nombre = openFileDialog1.FileName;
                 int tipoArchivo = openFileDialog1.FilterIndex;
+
 
                 IExportador exportador = (new ExportadorFactory()).GetInstance(tipoArchivo);
 
