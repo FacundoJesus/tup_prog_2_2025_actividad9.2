@@ -22,7 +22,7 @@ namespace Ejercicio1.Models.Exportadores
 
             m.Patente = splitResult[0];
             m.Vencimiento = DateTime.ParseExact(splitResult[1], "dd/MM/yyyy",CultureInfo.InvariantCulture);
-            m.Importe = Convert.ToDouble(splitResult[2], CultureInfo.InvariantCulture);
+            m.Importe = Convert.ToDouble(splitResult[2]);
 
             return true;
         }  

@@ -18,7 +18,7 @@ namespace Ejercicio1
         {
 
             FileStream fs = null;
-            string path = openFileDialog1.FileName;
+            string path = "multas.dat"; //Archivo binario interno del programa
             if (File.Exists(path)) {
                 try
                 {
@@ -152,9 +152,9 @@ namespace Ejercicio1
                         }
                     }
                 }
-                catch (PatenteNoValidaException excePatente)
+                catch (PatenteNoValidaException excepPatente)
                 {
-                    MessageBox.Show(excePatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(excepPatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -195,9 +195,9 @@ namespace Ejercicio1
                     }
 
                 }
-                catch (PatenteNoValidaException excePatente)
+                catch (PatenteNoValidaException excepPatente)
                 {
-                    MessageBox.Show(excePatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(excepPatente.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -210,19 +210,16 @@ namespace Ejercicio1
                 }
 
             }
-
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
             FileStream fs = null;
-
+            string path = "multas.dat"; //Mismo archivo binario interno.
             try
             {
-                string path = openFileDialog1.FileName;
-                fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                fs = new FileStream(path, FileMode.Create, FileAccess.Write);
                 #pragma warning disable SYSLIB0011
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(fs, exportables);
@@ -230,7 +227,7 @@ namespace Ejercicio1
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "ERROR al guardar Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
